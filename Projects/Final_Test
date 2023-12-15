@@ -1,1 +1,44 @@
+.global main
+
+.align 4
+.section .rodata
+
+Output:.asciz  "%d \n"
+
+.align 4
+.text
+
+main:
+	push {lr}
+
+	mov r0, #0
+	bl time
+	bl srand
+
+	mov r4, #0
+
+	loop:
+	bl rand
+
+	and r1, r0, #7
+	add r1, #1
+
+	if:
+	cmp r1, #4
+	ble endif
+	sub r1, r1, #4
+	endif:
+
+	ldr r0, =Output
+	bl printf
+
+	cmp r4, #5
+	add r4, #1
+	Bge end
+	ble loop
+
+	end:
+
+	mov r0, #0
+	pop {pc}
 
